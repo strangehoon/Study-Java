@@ -1,0 +1,355 @@
+어떤 객체가 있을 때 그 객체의 필드(변수)와 메서드를 다른 객체가 물려 받을 수 있는 기능을 상속이라고 한다.
+# 클래스 상속 문법
+자바 문법으로 상속을 구현할 때는 extends 예약어를 사용한다. 아래 코드는 B클래스가 A클래스를 상속받는다라는 뜻이다.
+```java
+class B extends A {
+}
+```
+# 상속은 언제 사용할까?
+상속은 기존 클래스의 변수와 코드를 재사용할 수 있어서 개발 시간을 단축시킬 수 있고 클래스 간 계층적 분류 및 관리가 가능하여 유지 보수가 용이하다는 이점이 있다. 상속은 주로 IS-A(is a relationship; inheritance) 관계에서 사용한다. IS-A 관계란 일반적인 개념과 구체적인 개념의 관계를 의미한다. 예를 들어 '사람은 표유류이다'와 같은 일반 클래스를 점차 구체화하는 상황에서 상속을 사용한다. 상속을 단순히 코드를 재사용할 목적으로 이질적인 클래스 간에 상속 관계를 사용하는 것은 좋지 않다. 다음은 과목을 나타내는 Subject 클래스이다. 
+```java
+public class Subject {
+	private int subjectId;
+    private int subjectName;
+    
+    public int getSubjectId( ) {
+    	return subjectId;
+    }
+    public void setSubjectId(int subjectId) {
+    	this.subjectId = subjectId;
+    }
+    public int getSubjectName( ) {
+    	return subjectName;
+    }
+    public void setSubjectName(int subjectName) {
+    	this.subjectName = subjectName;
+    }
+    public void showSubjectInfo( ) {
+    	System.out.println(subjectId + "," +subjectName);
+    }
+}
+```
+ 이제 Student(학생) 클래스를 만들려고 한다. 모든 Student(학생)들은 Subject(전공 과목)을 가지고 있다. 그러므로 Subject 클래스에서 제공하는 여러 메서드를 활용하면 좋을 것 같다. 따라서 다음과 같이 Student 클래스가 Subject 클래스를 상속받도록 하였다. 
+ ```java
+ class Student extends Subject{ }
+ ```
+ 하지만 이러한 경우에는 상속을 사용하지 않는 게 좋다. 왜냐하면 Subject가 Student를 포괄하는 개념의 클래스가 아니기 떄문이다. 이러한 경우에는 'HAS-A 관계(has a relationship;association)'로 표현한다. HAS-A 관계란 한 클래스가 다른 클래스를 소유한 관계이다. 따라서 다음과 같이 Subject는 Student에 포함되어 Student의 멤버 변수로 사용하는 것이 적절하다. 
+ ```java
+ class Student {
+ 	Subject majorSubject;
+}
+ ```   
+    
+    
+    
+    
+    
+# 상속에서 생성자와 super
+하위 클래스가 생성되는 과정을 알아보자. 아래 세 클래스는 모두 같은 패키지 소속이다. 
+```java
+ 
+public class Customer {
+	public Customer()
+	{
+		System.out.println("Customer() 생성자 호출");
+	}
+}
+```
+-------------------
+```java
+public class VIPCustomer extends Customer{
+	public VIPCustomer()
+	{
+		System.out.println("VIPCusomer() 생성자 호출 ");
+	}
+	
+}
+```
+-------------------
+```java
+
+public class CustomerTest2 {
+	 public static void main(String[] args) {		
+         VIPCustomer customerKim = new VIPCustomer(); 
+		 
+	 }
+}
+```
+>**출력**
+Customer() 생성자 호출
+VIPCusomer() 생성자 호출
+
+분명 main 함수에서 하위 클래스의 인스턴스를 생성했음에도 불구하고 출력 결과를 보면 상위 클래스의 Customer 생성자가 먼저 호출되고 그  다음에 하위 클래스인 VIPCustomer 생성자가 호출되는 것을 알 수 있다. 그 이유는
+```java
+public VIPCustomer() {
+	//super()
+	{
+		System.out.println("VIPCusomer() 생성자 호출 ");
+	}
+}
+```
+이처럼 **super()**가 사실은 생략되어 있기 때문이다. 주의해야할 점은 VIPCustomer는 따로 super()를 작성해주지 않는 이상 항상 default로 super() 메서드를 내제하고 있으므로 상위 클래스인 Customer는  default 생성자를 가지고 있어야 한다. 
+> **super()**는 상위 클래스의 주소를 가지고 있어서 하위 클래스에서 상위 클래스에 접근할 때 사용한다. 또한 상위 클래스의 멤버 변수나 메서드를 참조할 수도 있다.
+
+다음은 super() 예약어로 매개변수가 있는 생성자를 호출하는 예이다.
+```java
+public class Customer {
+	
+	protected int customerID;
+	protected String customerName;
+	
+	
+	public Customer()
+	{
+		System.out.println("Customer() 생성자 호출");
+	}
+	
+	public Customer(int customerID, String customerName){
+		this.customerID = customerID;
+		this.customerName = customerName;
+		System.out.println("Customer(int, String) 생성자 호출");
+		System.out.println("CustomerID : " + customerID);
+		System.out.println("CustomerID : " + customerName);
+	}
+	
+}
+```
+---------------------------
+```java
+public class VIPCustomer extends Customer{
+	
+	public VIPCustomer()
+	{
+		System.out.println("VIPCusomer() 생성자 호출 ");
+	}
+	
+	public VIPCustomer(int customerID, String customerName, int agentID){
+		super(customerID, customerName);	//super()로 매개변수가 있는 생성자를 호출
+		System.out.println("VIPCusomer(int, String) 생성자 호출");
+	}
+}
+```
+-------------------------------
+```java
+public class CustomerTest2 {
+	 public static void main(String[] args) {		
+         VIPCustomer customerKim = new VIPCustomer(54, "Mike", 17);  
+		 
+	 }
+}
+```
+>**출력**
+Customer(int, String) 생성자 호출
+CustomerID : 54
+CustomerID : Mike
+VIPCusomer(int, String) 생성자 호출
+
+# overriding vs overloading
+## overriding
+하위 클래스에서 상의 클래스와 동일한 메소드를 정의하면 부모 클래스로부터 물려 받은 기본 동작 방법을 변경하는 효과를 갖게 된다.이를 메서드 **overriding**이라고 한다. overriding를 하기 위해서는 **메서드간의 서명(signature)**이 같아야한다.
+>**서명(signature)**
+* 메서드의 이름
+* 메서드 매개변수의 숫자와 데이터 타입 그리고 순서
+* 메서드의 리턴 타입
+
+```java
+class SuperClass{
+	public void fun1(){...}
+}
+class SubClass extends SuperClass{
+	public void fun1(){...}		//fun1()를 overriding 하고 있다. 하위 클래스의 인스턴스가 fun1()를 호출하면 overriding에 의해 하위 클래스의 fun1()이 실행된다.
+}
+```
+## overloading
+**overloading**이란 자바의 한 클래스 내에 이미 사용하려는 이름과 같은 이름을 가진 메서드가 있더라도 매개변수의 개수 또는 타입이 다르면 같은 이름을 사용하여 메서드를 정의할 수 있다는 것을 의미한다. 주의사항으로는 리턴 값이 다른건 오버로딩 할 수 없다. 다음은 overloading을 활용한 클래스 예제이다.
+```java
+public class Calculator{
+    int left, right;
+    int third = 0;
+      
+    public void setOprands(int left, int right){
+        System.out.println("setOprands(int left, int right)");
+        this.left = left;
+        this.right = right;
+    }
+     
+    public void setOprands(int left, int right, int third){
+        System.out.println("setOprands(int left, int right, int third)");
+        this.left = left;
+        this.right = right;
+        this.third = third;
+    }
+}
+```
+----------------------
+```java
+public class CalculatorDemo {
+      
+    public static void main(String[] args) {
+          
+        Calculator c1 = new Calculator();
+        c1.setOprands(10, 20);
+        Calculator c2 = new Calculator();
+        c2.setOprands(10, 20, 30); 
+    }
+}
+```
+# 가상메서드
+자바의 클래스는 멤버 변수와 메서드로 이루어져 있으며 이들이 사용하는 메모리는 서로 다르다. 클래스를 생성하여 인스턴스가 만들어지면 멤버 변수는 힙 메모리에 위치한다. 반면 메서드는 실행해야 할 명령 집합이기 때문에 인스턴스가 달라도 같은 로직을 수행한다. 즉 같은 객체의 인스턴스를 여러 개 생성한다고 해서 메서드도 여러 개 생성되지 않는다. 아래는 간단한 예이다.
+```java
+package virtualfunction;
+
+public class TestA {
+
+	int num;
+
+	void aaa(){
+		System.out.println("aaa() 출력");
+	}
+	
+	public static void main(String[] args){
+		
+		TestA a1 = new TestA();
+		a1.aaa();
+		
+		TestA a2 = new TestA();
+		a2.aaa();
+	}
+}
+```
+위 코드가 실행되는 메모리의 상태를 그림으로 나타내 보았다.
+<div style="text-align: left"> <img src =  
+"https://velog.velcdn.com/images/strangehoon/post/bcf5d9b1-07bd-4eb0-a755-4325c639d88a/image.png" height = "550px" width = "600px"> </div>
+조금 더 구체적으로 알아보자. 자바의 모든 메서드는 가상 메서드라고 부른다. 컴파일 시 가상메서드가 정의된 클래스가 있다면 가상 메서드 테이블이 만들어진다. 가상 메서드 테이블은 각 메서드의 이름과 실제 메모리 주소가 짝을 이루고 있다. 어떤 메서드가 호출되면 이 테이블에서 주소 값을 찾아서 해당 메서드의 명령을 수행한다. 다음은 상속 관계인 Customer 클래스(상위 클래스)와 VIPCustomer 클래스(하위 클래스)의 가상 메서드 테이블이다. 
+
+<div style="text-align: left"> <img src =  
+"https://velog.velcdn.com/images/strangehoon/post/82e1b2fe-8ab6-4069-a619-56ee1b05547a/image.png" height = "550px" width = "600px"> </div>
+그림에서 보듯이 calcPrice() 메서드는 두 클래스에서 서로 다른 메서드 주소를 가지고 있다. 이렇게 재정의된 메서드는 실제 인스턴스에 해당하는 메서드가 호출된다. showCustomerInfo()와 같이 재정의되지 않은 메서드인 경우는 메서드 주소가 같으며 상위 클래스의 메서드가 호출된다. 
+
+```java
+Customer ex = new VIPCustomer();
+ex.calcPrice();
+```
+즉 ex.calcPrice가 실행되면 ex 변수를 선언할 때 사용한 자료형(Customer)의 메서드가 호출되는 것이 아니라 생성된 인스턴스(VIPCustomer)의 메서드가 호출된다. 자바의 이러한 특성은 **다형성**이라는 개념의 밑바탕이 된다. 
+>상위 클래스 Customer와 이를 상속받은 하위 클래스 VIPCustomer가 있을 때, 상속받은 클래스는 상위 클래스 기능을 모두 사용할 수 있고 추가로 더 많은 기능을 구현하기 때문에 VIPCustomer는 VIPCustomer형이면서 동시에 Customer형이다. 즉  VIPCustomer 클래스로 인스턴스를 생성할 때 이 인스턴스의 자료형을 Customer형으로 클래스 형 변환하여 선언할 수 있다. 방법은 아래와 같다.
+```java
+Customer ex = new VIPCustomer();
+```
+위문장이 실행되면 ex는 선언한 클래스형에 기반하여 Customer 클래스의 멤버 변수와 메서드에 접근할 수 있다. 이러한 클래스 형 변환을 업캐스팅(upcasting)이라 한다.  한편 Customer형을 반대로 VIPCustomer형으로는 변환할 수 없다. 
+
+# 다형성
+
+**다형성(Polymorphism)**이란 하나의 메서드나 클래스가 있을 때 이것들이 다양한 방법으로 동작하는 것을 의미한다.
+```java
+public class A{
+    public String x(){return "A.x";}
+}
+``` 
+-----------
+```java
+public class B extends A{
+    public String x(){return "B.x";}
+    public String y(){return "y";}
+}
+```````````````
+-----------------
+```java
+public class B2 extends A{
+    public String x(){return "B2.x";}
+}
+```
+---------------
+```java
+public class PolymorphismDemo1 {
+    public static void main(String[] args) {
+        A obj = new B();
+        A obj2 = new B2();
+        System.out.println(obj.x());
+        System.out.println(obj2.x());
+    }
+}
+```
+>**출력결과**
+B.x
+B2.x
+
+앞서 가상메서드에서 기술하였듯이 클래스 B를 클래스 A의 데이터 타입으로 인스턴스화 했을 때 클래스 A에 존재하는 멤버만이 클래스 B의 멤버가 된다. 동시에 클래스 B에서 오버라이딩한 멤버의 동작방식은 그대로 유지한다. 하지만 이러한 특성은 왜 사용하고 어떤 이점이 있을까? 다음 예제를 보자.
+```java
+public abstract class Calculator{
+    int left, right;
+    public void setOprands(int left, int right){
+        this.left = left;
+        this.right = right;
+    } 
+    int _sum() {
+        return this.left + this.right;
+    }
+    public abstract void sum();  
+    public abstract void avg();
+    public void run(){
+        sum();
+        avg();
+    }
+}
+```
+------------------
+```java
+public class CalculatorDecoPlus extends Calculator {
+    public void sum(){
+        System.out.println("+ sum :"+_sum());
+    }
+    public void avg(){
+        System.out.println("+ avg :"+(this.left+this.right)/2);
+    }
+} 
+```
+```java
+public class CalculatorDecoMinus extends Calculator {
+    public void sum(){
+        System.out.println("- sum :"+_sum());
+    }
+    public void avg(){
+        System.out.println("- avg :"+(this.left+this.right)/2);
+    }
+} 
+```
+---------------------
+```java
+public class Bus {
+    public static void execute(Calculator cal){
+        System.out.println("실행결과");
+        cal.run();
+    }
+    public static void main(String[] args) { 
+        Calculator c1 = new CalculatorDecoPlus();
+        c1.setOprands(10, 20);
+         
+        Calculator c2 = new CalculatorDecoMinus();
+        c2.setOprands(10, 20);
+         
+        execute(c1);
+        execute(c2);
+    }
+}
+```
+>**출력결과**
+실행결과
+\+ sum :30
+\+ avg :15
+실행결과
+\- sum :30
+\- avg :15
+
+
+만약 메서드 exexute의 매개변수 데이터 타입으로 Calculator를 사용할 수 없는 상황이면 어떻게 해야 할까? 위와 같은 로직은 사용할 수 없을 것이다. 아마 데이터 타입의 수에 맞게 execute 메서드를 일일이 구현해야 하므로 중복이 발생해 코드가 길어질 것이다. 원래대로라면 메서드 execute 입장에서는 매개변수로 전달된 값이 Calculator이거나 그 자식이라면 메서드 run을 가지고 있다는 것을 보장받을 수 있게 되는 것이다. 즉 필요에 따라 상속받은 모든 클래스를 하나의 상위 클래스로 처리할 수 있고 다형성에 의해 각 클래스의 여러 가지 구현을 실행할 수 있으므로 프로그램을 쉽게 확장할 수 있고 유지 보수하기 좋다. 다형성은 추상 클래스, 인터페이스에서 구현된다. 또한 안드로이드, 스프링 등 자바 기반의 프레임워크에서 응용할 수 있는 객체 지향 프로그램의 중요한 개념이다.
+
+# 다운캐스팅과 instanceof
+앞에서 하위 클래스에서 상위 클래스로 형 변환이 묵시적으로 이루어지는 과정을 보았다. 하지만 필요에 따라 다시 원래 인스턴스의 자료형으로 되돌아가야 하는 경우가 존재한다. 이렇게 상위 클래스로 형 변환되었던 하위 클래스를 다시 원래 자
+료형으로 형 변환하는 것을 **다운 캐스팅(downcasting)**이라고 한다. 
+## instanceof
+상위 클래스로 Animal, 하위 클래스로 Human, Tiger, Eagle가 있다. 상속 관계를 생각해 보면 모든 인간은 동물이지만 모든 동물이 인간은 아니다. 따라서 다운 캐스팅을 하기 전에 상위 클래스로 형 변환된 인스턴스의 원래 자료형을 확인해야 변환할 때 오류를 막을 수 있다. 이때 사용하는 예약어가 instanceof이다. instanceof는 다음과 같이 사용할 수 있다.
+```java
+Animal hAnimal = new Human();
+if(hAnimal instanceof Human) {	//hAnimal 인스턴스 자료형이 Human형이라면
+	Human human = (Human)hAnimal;	//인스턴스 hAnimal을 Human 형으로 다운 캐스팅
+}
