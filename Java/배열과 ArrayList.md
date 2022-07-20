@@ -174,10 +174,10 @@ public class ObjectCopy2 {
 <div style="text-align: left"> <img src =   
 "https://velog.velcdn.com/images/strangehoon/post/032099eb-9052-49b2-aa2c-a7cc0da618b1/image.png" height = "250px" width = "300px"> </div>
 </br>
-이와 같이 복사를 주소 값만 복사한다고 해서 **얕은 복사( copy)** 라고 한다.
+이와 같이 복사를 주소 값만 복사한다고 해서 얕은 복사(shallow copy)라고 한다.
 
 ### 깊은 복사
-인스턴스를 따로 관리하고 싶다면 직접 인스턴스를 만들고 그 값을 복사해야 한다. 이를 **깊은 복사(deep copy)** 라고 한다.
+인스턴스를 따로 관리하고 싶다면 직접 인스턴스를 만들고 그 값을 복사해야 한다. 이를 깊은 복사(deep copy)라고 한다.
 ```java
 public class ObjectCopy3 {
 
