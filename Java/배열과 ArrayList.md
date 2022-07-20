@@ -67,8 +67,7 @@ Book[ ] library = new Book[5];
 ```
 코드의 내용만 보면 Book 인스턴스 5개가 생성된 것처럼 보인다. 하지만 이 코드는 Book 인스턴스 주소 값을 담을 공간 5개를 생성하는 의미를 가진다. 즉 이 코드를 실행하면 아래 그림과 같이 Book 주소 값을 담을 공간이 5개 만들어지고 자동으로 각 공간은 '비어있다'는 의미의 null 값으로 초기화된다.
 
-<p align="center"> <img src = 
-"https://velog.velcdn.com/images/strangehoon/post/09620f68-7a4f-4c53-a2e9-b6c489af0518/image.png" height = "400px" width = "400px"> </div>
+![스크린샷(909)](https://user-images.githubusercontent.com/101917562/179920320-22827011-659f-4f33-a6ec-c6162eedfc48.png)
 
 이제 각 배열 요소에 인스턴스를 생성해 넣어 보겠다. Book 클래스에 구현한 생성자를 사용했다.
 ```java
@@ -80,7 +79,8 @@ Book[ ] library = new Book[5];
     library[4] = new Book("어린왕자", "생텍쥐페리");
  ``` 
     
-  <p align="center"> <img src =   "https://velog.velcdn.com/images/strangehoon/post/9d17a640-a48e-4422-81ae-0409371453c8/image.png" height = "400px" width = "400px"> </div>
+ ![스크린샷(911)](https://user-images.githubusercontent.com/101917562/179920873-0ad73733-f775-4c81-bd7d-cdd2700ad89e.png)
+
 
 각 배열 요소에는 각각 요소가 가리키는 인스턴스의 주소를 가지고 있다.
 
@@ -230,8 +230,8 @@ public class ObjectCopy3 {
 데미안,헤르만 헤세
 어떻게 살 것인가,유시민
 
-<div style="text-align: left"> <img src =  
-"https://velog.velcdn.com/images/strangehoon/post/8650429c-2149-4bc4-a61e-db26b8d33485/image.png" height = "180px" width = "300px"> </div>
+![스크린샷(914)](https://user-images.githubusercontent.com/101917562/179921413-9cec8ae4-4c00-4f70-825a-8efe5511396a.png)
+
 복사할 배열 요소는 기존 배열 요소와 서로 다른 인스턴스를 가리키므로 기존 배열의 요소 값이 변경되어도 영향을 받지 않는다는 것을 알 수 있다.
 
 ## 향상된 for문과 배열
