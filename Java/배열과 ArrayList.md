@@ -71,7 +71,7 @@ Book[ ] library = new Book[5];
 
 이제 각 배열 요소에 인스턴스를 생성해 넣어 보겠다. Book 클래스에 구현한 생성자를 사용했다.
 ```java
-	Book[ ] library = new Book[5];
+    Book[ ] library = new Book[5];
     library[0] = new Book("태백산맥", "조정래");
     library[1] = new Book("데미안", "헤르만 헤세");
     library[2] = new Book("어떻게 살 것인가", "유시민");
@@ -173,11 +173,11 @@ public class ObjectCopy2 {
 
 <div style="text-align: left"> <img src =   
 "https://velog.velcdn.com/images/strangehoon/post/032099eb-9052-49b2-aa2c-a7cc0da618b1/image.png" height = "250px" width = "300px"> </div>
-
-이와 같이 복사를 주소 값만 복사한다고 해서 **얕은 복사(shallow copy)**라고 한다.
+</br>
+이와 같이 복사를 주소 값만 복사한다고 해서 **얕은 복사( copy)** 라고 한다.
 
 ### 깊은 복사
-인스턴스를 따로 관리하고 싶다면 직접 인스턴스를 만들고 그 값을 복사해야 한다. 이를 **깊은 복사(deep copy)**라고 한다.
+인스턴스를 따로 관리하고 싶다면 직접 인스턴스를 만들고 그 값을 복사해야 한다. 이를 **깊은 복사(deep copy)** 라고 한다.
 ```java
 public class ObjectCopy3 {
 
@@ -235,7 +235,7 @@ public class ObjectCopy3 {
 복사할 배열 요소는 기존 배열 요소와 서로 다른 인스턴스를 가리키므로 기존 배열의 요소 값이 변경되어도 영향을 받지 않는다는 것을 알 수 있다.
 
 ## 향상된 for문과 배열
-자바 5부터 제공되는 **향상된 for문(enhanced for loop)**은 배열의 처음에서 끝까지 모든 요소를 참조할 때 사용하면 편리한 반복문이다. 향상된 for문은 배열 요소 값을 순서대로 하나씩 가져와 변수에 대입한다. 형식은 아래와 같다. 
+자바 5부터 제공되는 **향상된 for문(enhanced for loop)** 은 배열의 처음에서 끝까지 모든 요소를 참조할 때 사용하면 편리한 반복문이다. 향상된 for문은 배열 요소 값을 순서대로 하나씩 가져와 변수에 대입한다. 형식은 아래와 같다. 
 ```java
 for(변수 : 배열) {
 	반복 실행문;
@@ -254,7 +254,7 @@ int[ ][ ]arr = new int[2][4];
 arr.length는 행의 개수를, 각 행의 길이 arr[i].length는 열의 개수를 나타낸다.
 
 # ArrayList
-배열은 프로그램에서 사용하려면 항상 배열 길이를 먼저 정해야 하고 한번 정해진 배열의 크기는 변경할 수 없다. 이러한 배열의 불편함 들을 줄이기 위해 자바에서는 ArrayList를 제공한다. 참고로 ArrayList는 java.util 패키지에 구현되어 있는 클래스이다.(각종 자료 구조와 알고리즘에 관련된 클래스가 이 패키지에 존재한다.)  따라서 ArrayList를 사용하려면 자바 클래스를 선언하기 전에 **import java.util.ArrayList;**문장을 삽입해야 한다.
+배열은 프로그램에서 사용하려면 항상 배열 길이를 먼저 정해야 하고 한번 정해진 배열의 크기는 변경할 수 없다. 이러한 배열의 불편함 들을 줄이기 위해 자바에서는 ArrayList를 제공한다. 참고로 ArrayList는 java.util 패키지에 구현되어 있는 클래스이다.(각종 자료 구조와 알고리즘에 관련된 클래스가 이 패키지에 존재한다.)  따라서 ArrayList를 사용하려면 자바 클래스를 선언하기 전에 **import java.util.ArrayList;** 문장을 삽입해야 한다.
 ## ArrayList 클래스의 주요 매서드
 | 메서드 | 설명 |
 |:----------: |:----------:|
